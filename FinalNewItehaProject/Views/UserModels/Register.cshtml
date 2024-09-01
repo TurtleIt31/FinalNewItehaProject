@@ -1,36 +1,51 @@
 ﻿@model FinalNewItehaProject.Models.UserModel
 
-<h2>Register</h2>
+<div class="container mt-5" style="background-color: #f4f4f4; padding: 20px; border-radius: 8px;">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm" style="background-color: #e0e0e0;">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">Register</h2>
 
-<form asp-action="Register" method="post">
-    <div asp-validation-summary="All" class="text-danger"></div>
+                    <!-- Error Message Label with Icon -->
+                    <h5 class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Error Messages</h5>
+                    <div asp-validation-summary="All" class="alert alert-danger" style="background-color: #FFD2D2; color: #D8000C; border-color: #D8000C;">
+                    </div>
 
-    <div class="form-group">
-        <label asp-for="UserName" class="control-label"></label>
-        <input asp-for="UserName" class="form-control" />
-        <span asp-validation-for="UserName" class="text-danger"></span>
+                    <form asp-action="Register" method="post">
+                        <div class="form-group mb-3">
+                            <label asp-for="UserName" class="form-label"></label>
+                            <input asp-for="UserName" class="form-control shadow-sm" placeholder="Enter your username" style="background-color: #fffdf7;" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control shadow-sm" placeholder="Enter your email" style="background-color: #fffdf7;" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" type="password" class="form-control shadow-sm" placeholder="Enter your password" style="background-color: #fffdf7;" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="UserType" class="form-label"></label>
+                            <select asp-for="UserType" class="form-control shadow-sm" style="background-color: #fffdf7;">
+                                <option value="Customer">Customer</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                            <span asp-validation-for="UserType" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label asp-for="Email" class="control-label"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <div class="form-group">
-        <label asp-for="UserType" class="control-label"></label>
-        <select asp-for="UserType" class="form-control">
-            <option value="Customer">Customer</option>
-            <option value="Admin">Admin</option>
-        </select>
-        <span asp-validation-for="UserType" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
+</div>

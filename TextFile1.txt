@@ -1,0 +1,95 @@
+open nuget packet manager and do the following command "add-migration" you can give it any name
+from there please say update database
+
+#SQL
+
+Sql code for User model
+CREATE TABLE [dbo].[UserModel] (
+    [UserId]   INT            IDENTITY (1, 1) NOT NULL,
+    [UserType] NVARCHAR (MAX) NOT NULL,
+    [Email]    NVARCHAR (MAX) DEFAULT (N'') NOT NULL,
+    [Password] NVARCHAR (MAX) DEFAULT (N'') NOT NULL,
+    [UserName] NVARCHAR (MAX) DEFAULT (N'') NOT NULL,
+    CONSTRAINT [PK_UserModel] PRIMARY KEY CLUSTERED ([UserId] ASC)
+);
+
+
+sql code for shoppingcartProductmodel
+CREATE TABLE [dbo].[ShoppingCartProductModel] (
+    [ShoppingCartProductId] INT IDENTITY (1, 1) NOT NULL,
+    [ShoppingCartId]        INT NOT NULL,
+    [ProductId]             INT NOT NULL,
+    [Quantity]              INT NOT NULL,
+    CONSTRAINT [PK_ShoppingCartProductModel] PRIMARY KEY CLUSTERED ([ShoppingCartProductId] ASC),
+    CONSTRAINT [FK_ShoppingCartProductModel_ProductsModel_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [dbo].[ProductsModel] ([ProductId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ShoppingCartProductModel_ShoppingCartModel_ShoppingCartId] FOREIGN KEY ([ShoppingCartId]) REFERENCES [dbo].[ShoppingCartModel] ([ShoppingCartId]) ON DELETE CASCADE
+);
+
+GO
+CREATE NONCLUSTERED INDEX [IX_ShoppingCartProductModel_ProductId]
+    ON [dbo].[ShoppingCartProductModel]([ProductId] ASC);
+
+GO
+CREATE NONCLUSTERED INDEX [IX_ShoppingCartProductModel_ShoppingCartId]
+    ON [dbo].[ShoppingCartProductModel]([ShoppingCartId] ASC);
+
+
+sql code for shoppingcartmodel
+CREATE TABLE [dbo].[ShoppingCartModel] (
+    [ShoppingCartId] INT IDENTITY (1, 1) NOT NULL,
+    [UserId]         INT NOT NULL,
+    CONSTRAINT [PK_ShoppingCartModel] PRIMARY KEY CLUSTERED ([ShoppingCartId] ASC),
+    CONSTRAINT [FK_ShoppingCartModel_UserModel_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[UserModel] ([UserId]) ON DELETE CASCADE
+);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_ShoppingCartModel_UserId]
+    ON [dbo].[ShoppingCartModel]([UserId] ASC);
+
+Sql Code for Products Model
+CREATE TABLE [dbo].[ProductsModel] (
+    [ProductId]          INT            IDENTITY (1, 1) NOT NULL,
+    [ProductName]        NVARCHAR (100) NOT NULL,
+    [ProductDescription] NVARCHAR (MAX) NOT NULL,
+    [NumberOfProducts]   INT            NOT NULL,
+    [ProductImage]       NVARCHAR (MAX) NOT NULL,
+    [ProductPrice]       INT            NOT NULL,
+    CONSTRAINT [PK_ProductsModel] PRIMARY KEY CLUSTERED ([ProductId] ASC)
+);
+
+SQL script for sample data
+
+INSERT INTO [dbo].[UserModel] (UserType, Email, Password, UserName)
+VALUES
+('Admin', 'admin@example.com', 'AdminPass123', 'AdminUser'),
+('Customer', 'customer1@example.com', 'CustomerPass123', 'CustomerUser1'),
+('Customer', 'customer2@example.com', 'CustomerPass123', 'CustomerUser2');
+
+
+INSERT INTO [dbo].[ProductsModel] (ProductName, ProductDescription, NumberOfProducts, ProductImage, ProductPrice)
+VALUES
+('Product 1', 'Description for Product 1', 50, 'product1.jpg', 100),
+('Product 2', 'Description for Product 2', 100, 'product2.jpg', 200),
+('Product 3', 'Description for Product 3', 75, 'product3.jpg', 150);
+
+
+-- Assuming UserId 2 and 3 are customers, creating a shopping cart for each.
+INSERT INTO [dbo].[ShoppingCartModel] (UserId)
+VALUES
+(2),
+(3);
+
+
+-- Assuming ShoppingCartId 1 belongs to CustomerUser1 and ShoppingCartId 2 belongs to CustomerUser2
+INSERT INTO [dbo].[ShoppingCartProductModel] (ShoppingCartId, ProductId, Quantity)
+VALUES
+(1, 1, 2),  -- CustomerUser1 added 2 units of Product 1 to their cart
+(1, 2, 1),  -- CustomerUser1 added 1 unit of Product 2 to their cart
+(2, 3, 3);  -- CustomerUser2 added 3 units of Product 3 to their cart
+
+-- Verify the data by selecting it from the tables
+SELECT * FROM [dbo].[UserModel];
+SELECT * FROM [dbo].[ProductsModel];
+SELECT * FROM [dbo].[ShoppingCartModel];
+SELECT * FROM [dbo].[ShoppingCartProductModel];

@@ -7,10 +7,50 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FinalNewItehaProject.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-color: #f0f4f8;
+            color: #333;
+        }
+
+        .navbar-custom {
+            background-color: #005f73;
+        }
+
+            .navbar-custom .navbar-brand, .navbar-custom .nav-link {
+                color: #fff;
+            }
+
+                .navbar-custom .nav-link:hover {
+                    color: #94d2bd;
+                }
+
+        .container-main {
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-custom {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #005f73;
+            color: #fff;
+        }
+
+            .footer-custom a {
+                color: #94d2bd;
+            }
+
+                .footer-custom a:hover {
+                    color: #fff;
+                }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-custom navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FinalNewItehaProject</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,35 +60,35 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="ProductsModels" asp-action="Index">Products</a>
+                            <a class="nav-link" asp-controller="ProductsModels" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="ShoppingCartProductModels" asp-action="Index">Shopping Cart</a>
+                            <a class="nav-link" asp-controller="ShoppingCartProductModels" asp-action="Index">Shopping Cart</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         @if (Context.Session.GetInt32("UserId") != null)
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-dark">Hello, @Context.Session.GetString("UserName")!</span>
+                                <span class="nav-link">Hello, @Context.Session.GetString("UserName")!</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="UserModels" asp-action="Logout">Logout</a>
+                                <a class="nav-link btn btn-sm btn-outline-light" asp-controller="UserModels" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="UserModels" asp-action="Login">Login</a>
+                                <a class="nav-link btn btn-sm btn-outline-light" asp-controller="UserModels" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="UserModels" asp-action="Register">Register</a>
+                                <a class="nav-link btn btn-sm btn-outline-light" asp-controller="UserModels" asp-action="Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -56,13 +96,15 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container mt-4">
+        <div class="container-main">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer-custom mt-4">
         <div class="container">
             &copy; 2024 - FinalNewItehaProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
