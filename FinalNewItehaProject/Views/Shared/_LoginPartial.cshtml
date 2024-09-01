@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+    @if (Context.Session.GetInt32("UserType") != null)
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" href="#">Hello @Context.Session.GetString("UserType")!</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="UserModels" asp-action="Logout">Logout</a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a asp-controller="UserModels" asp-action="Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a asp-controller="UserModels" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>
